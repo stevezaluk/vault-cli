@@ -1,0 +1,3 @@
+[submodule "vault_lib"]
+	path = vault_lib
+	url = git@github.com:stevezaluk/vault-lib.git
