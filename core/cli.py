@@ -1,6 +1,7 @@
 from core.config import Config
 from argparse import ArgumentParser
 
+from vault_lib.core.colors import print_error
 from vault_lib.core.file import MediaFile, PlexFile
 from vault_lib.errors import VAULTFileNotFound
 from vault_lib.media_types.game import GameFile
@@ -45,7 +46,7 @@ class CommandLineInterface(ArgumentParser):
             try:
                 file = self._server.get_file(self._args.info, section)
             except VAULTFileNotFound:
-                print("")
+                print_error("Failed to find file: ", self._args.info, fatal=True)
             
             print("==> General Info")
             print("File Name: ", file.file_name)
