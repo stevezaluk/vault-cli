@@ -2,7 +2,8 @@ import sys
 from dotenv import dotenv_values
 
 from vault_lib.core.file import LocalFile
-from vault_lib.server.server import VAULTServer, LocalVAULTServer
+from vault_lib.server.server import VAULTServer
+from vault_lib.client.client import VAULTClient
 
 class Config(LocalFile):
     def __init__(self, config_file="{}/.env".format(sys.path[0])):
@@ -34,11 +35,11 @@ class Config(LocalFile):
     def get_connection(self, direct=False):
         if direct is False:
             if (self.rest_ip is not None and self.rest_port is not None):
-                return VAULTServer(self.rest_ip, int(self.rest_port))
+                return VAULTClient(self.rest_ip, int(self.rest_port))
         else:
             if (self.mongo_ip and self.mongo_port):
                 if (self.plex_ip and self.plex_port and self.plex_token):
-                    server = LocalVAULTServer(self.mongo_ip, int(self.mongo_port), self.plex_ip, int(self.plex_port), self.plex_token)
+                    server = VAULTServer(self.mongo_ip, int(self.mongo_port), self.plex_ip, int(self.plex_port), self.plex_token)
                     server.connect()
                     return server
 
